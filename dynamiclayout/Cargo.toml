@@ -1,0 +1,9 @@
+[package]
+name = "dynamiclayout"
+version = "0.1.0"
+authors = ["Ilkka Rauta <ilkka.rauta@gmail.com>"]
+
+[dependencies]
+
+[dev-dependencies]
+dynamiclayout_derive = { path = "../dynamiclayout_derive", version = "0.1.0" }
