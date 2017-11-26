@@ -62,7 +62,6 @@ macro_rules! make_matrix_type {
             fn get_field_spans(layout: &Self::Layout) -> Box<Iterator<Item=FieldSpan>> {
                 let offset = layout.offset();
                 let stride = layout.stride();
-                // TODO: 0..4 vs. 0..$column_count
                 Box::new((0..$column_count).map(move |i| FieldSpan {
                     offset: (offset + stride * i) as OffsetType,
                     length: (::std::mem::size_of::<f32>() * $row_count) as LengthType,
