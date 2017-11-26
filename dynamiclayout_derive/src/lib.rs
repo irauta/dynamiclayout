@@ -37,7 +37,7 @@ fn make_types(original_name: &Ident, fields: &Vec<Field>) -> Tokens {
         #[doc(hidden)]
         pub mod #mod_name {
             #![allow(unused_imports)]
-            use super::*;
+            //use super::*;
             use ::std::mem;
             use ::std::ops;
             extern crate dynamiclayout;
