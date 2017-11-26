@@ -158,3 +158,19 @@ pub fn get_array_field_spans<'a, T, L>(layout: &L::ArrayType) -> Box<Iterator<It
     let spans: Vec<FieldSpan> = layouts.iter().flat_map(|l| <T as Field<'a>>::get_field_spans(l)).collect();
     Box::new(spans.into_iter())
 }
+
+pub fn validate_field_spans(mut spans: Vec<FieldSpan>) -> Result<(), LayoutError> {
+    // Are 0 spans okay? I guess there won't be any overlap in that case, so let's consider that okay
+    if spans.len() < 2 {
+        return Ok(())
+    }
+    spans.sort_unstable_by_key(|s| s.offset);
+    for pair in spans.windows(2) {
+        let first = &pair[0];
+        let second = &pair[1];
+        if first.offset + first.length > second.offset {
+            return Err(LayoutError);
+        }
+    }
+    Ok(())
+}

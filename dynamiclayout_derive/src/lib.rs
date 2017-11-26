@@ -188,7 +188,9 @@ fn impl_field(fields: &Vec<Field>, array_fields: &Vec<ArrayFieldInfo>) -> Tokens
                         len: 0,
                         fields: layout_fields
                     };
-                    outer.len = <OriginalType as Field>::get_field_spans(&outer).map(|span| span.offset + span.length).max().unwrap_or(0);
+                    let spans: Vec<_> = <OriginalType as Field>::get_field_spans(&outer).collect();
+                    outer.len = spans.iter().map(|span| span.offset + span.length).max().unwrap_or(0);
+                    dynamiclayout::validate_field_spans(spans)?;
                     Ok(outer)
                 } else {
                     Err(LayoutError)
